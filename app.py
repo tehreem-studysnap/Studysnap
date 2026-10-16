@@ -1,10 +1,12 @@
 from flask import Flask, request, session, redirect, url_for, jsonify, render_template_string
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+import os
 
 app = Flask(__name__)
-app.secret_key = "change-this-secret-key"
-DB = "studysnap.db"
+app.secret_key = os.environ.get("SECRET_KEY", "change-this-secret-key")
+# Absolute path so the database is found no matter where the server starts the app
+DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "studysnap.db")
 
 
 # ---------- DATABASE ----------
